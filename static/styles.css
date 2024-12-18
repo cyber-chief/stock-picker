@@ -1,0 +1,104 @@
+/* General container styling */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+.form-group {
+    margin: 15px 0;
+    text-align: left;
+}
+
+input {
+    padding: 10px;
+    width: 200px;
+    font-size: 1em;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Styling for the gauges dashboard */
+.dashboard {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+
+.gauge-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px;
+}
+
+.gauge {
+    position: relative;
+    width: 200px;
+    height: 100px;  /* Height is halved to create a half-circle */
+    background-color: #f0f0f0;
+    border-radius: 200px 200px 0 0; /* Make the top half a circle */
+    border: 10px solid #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Aligns the needle to the bottom */
+    overflow: hidden; /* Clip the bottom half */
+    background-image: linear-gradient(to right, green, yellow, red);  /* Default gradient from green to yellow to red */
+    background-size: 100% 100%;  /* Makes sure the gradient covers the entire gauge */
+    transition: background-image 0.5s ease;  /* Smooth transition for background color */
+}
+
+.needle {
+    position: absolute;
+    width: 4px; /* Needle width */
+    height: 80px; /* Length of the needle */
+    background-color: black;
+    bottom: 0;  /* Align the bottom of the needle to the center of the bottom of the gauge */
+    transform-origin: center bottom;  /* Rotating from the bottom center */
+    transform: translateX(-50%);  /* Horizontally center the needle */
+    transition: transform 0.5s ease-in-out;  /* Smooth rotation */
+}
+
+.gauge-value {
+    position: absolute;
+    bottom: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+
+/* Ensure the gauges are responsive and adjust on smaller screens */
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gauge-container {
+        margin-bottom: 30px;
+    }
+}

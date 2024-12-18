@@ -1,0 +1,74 @@
+<html>
+<title>Stock Picker v1</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/static/styles.css">
+<script src="/static/gauge.js" defer></script>
+<h1>Rule 1 Stock Picker</h1>
+
+<form action="/stockInfo" method="post">
+    <label for="ticker">Enter Stock Ticker</label>
+    <br>
+    <input type="text" name="stock" id="stock"><br>
+    <input type="submit" value=Submit>
+</form>
+
+<h3>Stock Data for {{ticker}}</h3>
+
+   <div class="dashboard">
+            <!-- P/B Ratio Gauge -->
+            <div class="gauge-container">
+                <h2>P/B Ratio</h2>
+                <div class="gauge">
+                    <div class="needle" id="pb-needle"></div>
+                </div>
+                <p class="gauge-value" id="pb-value">P/B Ratio: {{ pb_ratio if pb_ratio is not none else '0' }}</p>
+            </div>
+
+            <!-- P/S Ratio Gauge -->
+            <div class="gauge-container">
+                <h2>P/S Ratio</h2>
+                <div class="gauge">
+                    <div class="needle" id="ps-needle"></div>
+                </div>
+                <p class="gauge-value" id="ps-value">P/S Ratio: {{ ps_ratio if ps_ratio is not none else '0' }}</p>
+            </div>
+
+            <!-- P/E Ratio Gauge -->
+            <div class="gauge-container">
+                <h2>P/E Ratio</h2>
+                <div class="gauge">
+                    <div class="needle" id="pe-needle"></div>
+                </div>
+                <p class="gauge-value" id="pe-value">P/E Ratio: {{ pe_ratio if pe_ratio is not none else '0' }}</p>
+            </div>
+        </div>
+        <h1 style="text-align: center;">Last 5 Years EPS Data for {{ ticker }}</h1>
+    
+    </div>
+
+    <script>
+        // Wait for DOM to load before initializing the gauges
+        document.addEventListener("DOMContentLoaded", () => {
+            // Update gauges with backend values passed into Jinja templates
+            {% if pe_ratio is not none %}
+            updateGauge({{ pe_ratio }}, 0, 30, "pe-needle", "pe-value");
+            {% endif %}
+
+            {% if ps_ratio is not none %}
+            updateGauge({{ ps_ratio }}, 0, 10, "ps-needle", "ps-value");
+            {% endif %}
+
+            {% if pb_ratio is not none %}
+            updateGauge({{ pb_ratio }}, 0, 5, "pb-needle", "pb-value");
+            {% endif %}
+        });
+    </script>
+
+
+<table>
+    <tr></tr>
+</table>
+
+
+</html>
