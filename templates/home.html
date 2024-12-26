@@ -1,16 +1,21 @@
-<html>
-<title>Stock Picker v1</title>
-<h1>Rule 1 Stock Picker</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Picker v1</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Rule 1 Stock Picker</h1>
 
-<form action="/stockInfo" method="post">
-    <label for="ticker">Enter Stock Ticker</label>
-    <br>
-    <input type="text" name="stock" id="stock"><br>
-    <input type="submit" value=Submit>
-</form>
+    <form action="/stockInfo" method="post">
+        <label for="stock">Enter Stock Ticker</label>
+        <input type="text" name="stock" id="stock" placeholder="e.g., AAPL">
+        <input type="submit" value="Submit">
+    </form>
 
-<a href="/goodStocks">See what stocks we have done analysis on already</a>
-
-
-
+    <a href="/goodStocks">See what stocks we have done analysis on already</a>
+    <a href="/stickerPrice">Calculate what price you should buy at</a>
+</body>
 </html>

@@ -43,9 +43,91 @@
                 <p class="gauge-value" id="pe-value">P/E Ratio: {{ pe_ratio if pe_ratio is not none else '0' }}</p>
             </div>
         </div>
-        <h1 style="text-align: center;">Last 5 Years EPS Data for {{ ticker }}</h1>
     
     </div>
+
+    <h1>3-Year Growth Rates</h1>
+     <!-- EPS Growth Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>EPS Growth</th>
+                <th>YTD</th>
+                <th>2Yrs</th>
+                <th>3Yrs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">EPS Growth</td>
+                <td class="{{ 'positive' if eps_growth[0] > 10 else 'yellow' if 5 <= eps_growth[0] <= 10 else 'negative' }}">{{ eps_growth[0] }}%</td>
+                <td class="{{ 'positive' if eps_growth[1] > 10 else 'yellow' if 5 <= eps_growth[1] <= 10 else 'negative' }}">{{ eps_growth[1] }}%</td>
+                <td class="{{ 'positive' if eps_growth[2] > 10 else 'yellow' if 5 <= eps_growth[2] <= 10 else 'negative' }}">{{ eps_growth[2] }}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Revenue Growth Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Revenue Growth</th>
+                <th>YTD</th>
+                <th>2Yrs</th>
+                <th>3Yrs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">Revenue Growth</td>
+                <td class="{{ 'positive' if revenue_growth[0] > 10 else 'yellow' if 5 <= revenue_growth[0] <= 10 else 'negative' }}">{{ revenue_growth[0] }}%</td>
+                <td class="{{ 'positive' if revenue_growth[1] > 10 else 'yellow' if 5 <= revenue_growth[1] <= 10 else 'negative' }}">{{ revenue_growth[1] }}%</td>
+                <td class="{{ 'positive' if revenue_growth[2] > 10 else 'yellow' if 5 <= revenue_growth[2] <= 10 else 'negative' }}">{{ revenue_growth[2] }}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Equity Growth Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Equity Growth</th>
+                <th>YTD</th>
+                <th>2Yrs</th>
+                <th>3Yrs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">Equity Growth</td>
+                <td class="{{ 'positive' if equity_growth[0] > 10 else 'yellow' if 5 <= equity_growth[0] <= 10 else 'negative' }}">{{ equity_growth[0] }}%</td>
+                <td class="{{ 'positive' if equity_growth[1] > 10 else 'yellow' if 5 <= equity_growth[1] <= 10 else 'negative' }}">{{ equity_growth[1] }}%</td>
+                <td class="{{ 'positive' if equity_growth[2] > 10 else 'yellow' if 5 <= equity_growth[2] <= 10 else 'negative' }}">{{ equity_growth[2] }}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Free Cash Flow Growth Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Free Cash Flow Growth</th>
+                <th>YTD</th>
+                <th>2Yrs</th>
+                <th>3Yrs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">Free Cash Flow Growth</td>
+                <td class="{{ 'positive' if fcf_growth[0] > 10 else 'yellow' if 5 <= fcf_growth[0] <= 10 else 'negative' }}">{{ fcf_growth[0] }}%</td>
+                <td class="{{ 'positive' if fcf_growth[1] > 10 else 'yellow' if 5 <= fcf_growth[1] <= 10 else 'negative' }}">{{ fcf_growth[1] }}%</td>
+                <td class="{{ 'positive' if fcf_growth[2] > 10 else 'yellow' if 5 <= fcf_growth[2] <= 10 else 'negative' }}">{{ fcf_growth[2] }}%</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
 
     <script>
         // Wait for DOM to load before initializing the gauges

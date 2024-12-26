@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Picker v1</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Calculate the Buy it Now Price</h1>
+
+    <form method="POST">
+        <label for="eps">EPS (Earnings Per Share)</label>
+        <input type="number" id="eps" name="eps" step="0.01" required>
+
+        <label for="future_pe">Future PE Ratio</label>
+        <input type="number" id="future_pe" name="future_pe" step="0.1" required>
+
+        <label for="growth_rate">Growth Rate (%)</label>
+        <input type="number" id="growth_rate" name="growth_rate" step="0.1" required>
+
+        <label for="return_rate">Return Rate (%)</label>
+        <input type="number" id="return_rate" name="return_rate" step="0.1" required>
+
+        <label for="years">Number of Years</label>
+        <input type="number" id="years" name="years" required>
+
+        <button type="submit">Calculate Sticker Price</button>
+    </form>
+
+    {% if sticker_price is not none %}
+        <div class="result">
+            <strong>Sticker Price:</strong> ${{ sticker_price }}
+        </div>
+    {% endif %}
+
+
+    <a href="/goodStocks">See what stocks we have done analysis on already</a>
+    <a href="/stickerPrice">Calculate what price you should buy at</a>
+</body>
+</html>

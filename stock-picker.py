@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from flask import Flask, render_template, request
 from GoogleNews import GoogleNews
 
+
 app = Flask(__name__)
 
 
@@ -96,17 +97,7 @@ def findTickers():
 def findGoodStocks(tickers):
     goodTickers = []
     currentDate = datetime.datetime.now()
-    print(len(tickers))
-    stock = yf.Ticker(tickers[120])
-    eps = getEPSResults(stock)
-    epsGrowth = getGrowth(eps)
-    freeCash = getFreeCash(stock)
-    cashGrowth = getGrowth(freeCash)
-    revenue = getSales(stock)
-    revenueGrowth = getGrowth(revenue)
-    equity = getEquity(stock)
-    equityGrowth = getGrowth(equity)
-    roicRate = getROIC(stock)
+    
 
 stocks = findTickers()
 findGoodStocks(stocks)
@@ -135,13 +126,32 @@ def getStock():
     roicRate = getROIC(stock)
     marginPrice = getSticker(6.59,0.07,20,15,10)
     print(marginPrice)
-    return render_template('stockInfo.html', ticker=ticker, pe_ratio=peRatio, ps_ratio=priceSale, pb_ratio=priceBook)
+    return render_template('stockInfo.html', ticker=ticker, pe_ratio=peRatio, ps_ratio=priceSale, pb_ratio=priceBook, eps_growth=epsGrowth, equity_growth=equityGrowth, fcf_growth=cashGrowth, revenue_growth=revenueGrowth)
 
 
 #return already evaluated stocks on Rule 1 metrics
 @app.route('/goodStocks', methods=['GET'])
 def goodStocks():
     return render_template('goodStocks.html')
+
+@app.route('/stickerPrice', methods=['GET','POST'])
+def stickerPage():
+    stickerPrice = None
+    if request.method == "POST":
+        try:
+            # Retrieve form inputs
+            eps = float(request.form["eps"])  # Earnings Per Share
+            future_pe = float(request.form["future_pe"])  # Future Price-to-Earnings Ratio
+            growth_rate = float(request.form["growth_rate"]) / 100  # Convert Growth Rate (%) to decimal
+            return_rate = float(request.form["return_rate"]) / 100  # Convert Return Rate (%) to decimal
+            years = int(request.form["years"])  # Number of Years
+            stickerPrice = getSticker(eps, growth_rate, future_pe, return_rate, years)
+        except (ValueError, KeyError) as e:
+            # Handle invalid or missing inputs gracefully
+            sticker_price = "Invalid Input"
+
+    return render_template('stickerPrice.html', sticker_price=stickerPrice)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

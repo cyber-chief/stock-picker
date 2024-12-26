@@ -1,45 +1,123 @@
-/* General container styling */
-.container {
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Heading */
 h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+    margin: 20px 0;
+    color: #4CAF50;
 }
 
-/* Form styling */
-.form-group {
-    margin: 15px 0;
-    text-align: left;
+/* Form Styles */
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-input {
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+input[type="text"] {
+    width: 90%;
     padding: 10px;
-    width: 200px;
-    font-size: 1em;
-    margin-top: 5px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
-button {
-    padding: 10px 20px;
+input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
     background-color: #4CAF50;
     color: white;
-    font-size: 1.1em;
-    border: none;
-    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
 }
 
-button:hover {
+input[type="submit"]:hover {
     background-color: #45a049;
 }
+
+/* Link Styles */
+a {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #4CAF50;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #388E3C;
+}
+
+/* Table Styles (for financial data views) */
+table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+td {
+    font-size: 14px;
+}
+
+.positive {
+    color: green;
+}
+.yellow {
+    color: yellow;
+    font-weight: bold;
+}
+
+.negative {
+    color: red;
+}
+
 
 /* Styling for the gauges dashboard */
 .dashboard {
