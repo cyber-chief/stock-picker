@@ -11,40 +11,61 @@ app = Flask(__name__)
 
 
 def getEPSResults(stock):
-    incomeStmt = stock.income_stmt
-    print(stock)
-    print(incomeStmt)
-    epsYoY = incomeStmt.iloc[20]
-    epsYoY = epsYoY.values
-    return epsYoY
+
+    try:
+        incomeStmt = stock.income_stmt
+        eps = incomeStmt.loc['Basic EPS']
+        eps = eps.values
+    except: 
+        eps = [0,0,0]
+    return eps
 
 def getFreeCash(stock):
-    freeCash = stock.cash_flow.iloc[0]
-    freeCash = freeCash.values
+    try:
+        freeCash = stock.cash_flow.loc['Free Cash Flow']
+        freeCash = freeCash.values
+    except:
+        freeCash = [0,0,0]
     return freeCash
 
 def getSales(stock):
-    revenue = stock.income_stmt.iloc[41]
-    revenue = revenue.values
+    try:
+        revenue = stock.income_stmt.loc['Total Revenue']
+        revenue = revenue.values
+    except:
+        revenue = [0,0,0]
     return revenue
 
 def getEquity(stock):
-    equity = stock.balance_sheet.iloc[12]
-    equity = equity.values
-
+    try:
+        equity = stock.balance_sheet.loc['Stockholders Equity']
+        equity = equity.values
+    except:
+        equit = [0,0,0]
     return equity
 
 def getROIC(stock):
-    ebit = stock.income_stmt.iloc[9].values
-    taxRate = stock.income_stmt.iloc[1].values
-    investedCap = stock.balance_sheet.iloc[6].values
+
+    incomeStmt = stock.income_stmt
+    balanceSheet = stock.balance_sheet
+    try:
+        ebit = incomeStmt.loc['EBIT']
+        taxRate = incomeStmt.loc['Tax Rate For Calcs']
+        investedCap = balanceSheet.loc['Invested Capital']
+    except:
+        ebit = [0,0,0]
+        taxRate = [0,0,0]
+        investedCap = [0,0,0]
 
     roic = []
 
     for e,t,i in zip(ebit, taxRate, investedCap):
-        n = e *(1-t)
-        r = n/i * 100
-        roic.append(r)
+        if i == 0:
+            roic.append(0)
+        else:
+            n = e *(1-t)
+            r = n/i * 100
+            roic.append(round(r, 2))
 
     return roic
 
@@ -64,10 +85,15 @@ def getSticker(eps, growthRate, futurePE, returnRate, years):
 def getGrowth(values):
     rates = []
     for i in range(len(values)-1):
+        if values[i+1] == 0:
+            return [0,0,0]
         rate = values[i]/values[i+1]
-        rate = rate - 1
+        if values[i] <0 and values[i+1] <0:
+            rate = (rate -1) * -1
+        else:
+            rate = rate - 1
         rate = rate * 100
-        rates.append(rate)
+        rates.append(round(rate, 2))
     return rates
 
 def findTickers():
@@ -90,13 +116,38 @@ def findTickers():
     #need to figure out how to remove index funds and others from this list
     for ticker in tickers:
         ticker =str(ticker)
-        if (not len(ticker) > 4) or (ticker[-1:] in badChars):
+        if ( len(ticker) <= 4) or (ticker[-1:] in badChars):
             goodTickers.append(ticker)
     return goodTickers
 
+def isGoodRate(rates):
+    for rate in rates:
+        if rate < 10:
+            return False
+
+    return True
+
 def findGoodStocks(tickers):
     goodTickers = []
-    currentDate = datetime.datetime.now()
+    for ticker in tickers:
+        stock = yf.Ticker(ticker)
+        eps = getEPSResults(stock)
+        epsGrowth = getGrowth(eps)
+        if isGoodRate(epsGrowth):
+            freeCash = getFreeCash(stock)
+            cashGrowth = getGrowth(freeCash)
+            if isGoodRate(cashGrowth):
+                revenue = getSales(stock)
+                revenueGrowth = getGrowth(revenue)
+                if isGoodRate(revenueGrowth):
+                    equity = getEquity(stock)
+                    equityGrowth = getGrowth(equity)
+                    if isGoodRate(equityGrowth):
+                        roicRate = getROIC(stock)
+                        if isGoodRate(roicRate):
+                            goodTickers.append(ticker)
+                            print(ticker +" has good financials")
+    print(goodTickers)
     
 
 stocks = findTickers()
@@ -124,9 +175,8 @@ def getStock():
     equity = getEquity(stock)
     equityGrowth = getGrowth(equity)
     roicRate = getROIC(stock)
-    marginPrice = getSticker(6.59,0.07,20,15,10)
-    print(marginPrice)
-    return render_template('stockInfo.html', ticker=ticker, pe_ratio=peRatio, ps_ratio=priceSale, pb_ratio=priceBook, eps_growth=epsGrowth, equity_growth=equityGrowth, fcf_growth=cashGrowth, revenue_growth=revenueGrowth)
+
+    return render_template('stockInfo.html', ticker=ticker, pe_ratio=peRatio, ps_ratio=priceSale, pb_ratio=priceBook, eps_growth=epsGrowth, equity_growth=equityGrowth, fcf_growth=cashGrowth, revenue_growth=revenueGrowth, roic=roicRate)
 
 
 #return already evaluated stocks on Rule 1 metrics

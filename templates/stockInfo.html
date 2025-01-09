@@ -60,9 +60,9 @@
         <tbody>
             <tr>
                 <td class="metric">EPS Growth</td>
-                <td class="{{ 'positive' if eps_growth[0] > 10 else 'yellow' if 5 <= eps_growth[0] <= 10 else 'negative' }}">{{ eps_growth[0] }}%</td>
-                <td class="{{ 'positive' if eps_growth[1] > 10 else 'yellow' if 5 <= eps_growth[1] <= 10 else 'negative' }}">{{ eps_growth[1] }}%</td>
-                <td class="{{ 'positive' if eps_growth[2] > 10 else 'yellow' if 5 <= eps_growth[2] <= 10 else 'negative' }}">{{ eps_growth[2] }}%</td>
+                <td class="{{ 'positive' if eps_growth[0] > 10 else 'black' if 5 <= eps_growth[0] <= 10 else 'negative' }}">{{ eps_growth[0] }}%</td>
+                <td class="{{ 'positive' if eps_growth[1] > 10 else 'black' if 5 <= eps_growth[1] <= 10 else 'negative' }}">{{ eps_growth[1] }}%</td>
+                <td class="{{ 'positive' if eps_growth[2] > 10 else 'black' if 5 <= eps_growth[2] <= 10 else 'negative' }}">{{ eps_growth[2] }}%</td>
             </tr>
         </tbody>
     </table>
@@ -80,9 +80,9 @@
         <tbody>
             <tr>
                 <td class="metric">Revenue Growth</td>
-                <td class="{{ 'positive' if revenue_growth[0] > 10 else 'yellow' if 5 <= revenue_growth[0] <= 10 else 'negative' }}">{{ revenue_growth[0] }}%</td>
-                <td class="{{ 'positive' if revenue_growth[1] > 10 else 'yellow' if 5 <= revenue_growth[1] <= 10 else 'negative' }}">{{ revenue_growth[1] }}%</td>
-                <td class="{{ 'positive' if revenue_growth[2] > 10 else 'yellow' if 5 <= revenue_growth[2] <= 10 else 'negative' }}">{{ revenue_growth[2] }}%</td>
+                <td class="{{ 'positive' if revenue_growth[0] > 10 else 'black' if 5 <= revenue_growth[0] <= 10 else 'negative' }}">{{ revenue_growth[0] }}%</td>
+                <td class="{{ 'positive' if revenue_growth[1] > 10 else 'black' if 5 <= revenue_growth[1] <= 10 else 'negative' }}">{{ revenue_growth[1] }}%</td>
+                <td class="{{ 'positive' if revenue_growth[2] > 10 else 'black' if 5 <= revenue_growth[2] <= 10 else 'negative' }}">{{ revenue_growth[2] }}%</td>
             </tr>
         </tbody>
     </table>
@@ -100,9 +100,9 @@
         <tbody>
             <tr>
                 <td class="metric">Equity Growth</td>
-                <td class="{{ 'positive' if equity_growth[0] > 10 else 'yellow' if 5 <= equity_growth[0] <= 10 else 'negative' }}">{{ equity_growth[0] }}%</td>
-                <td class="{{ 'positive' if equity_growth[1] > 10 else 'yellow' if 5 <= equity_growth[1] <= 10 else 'negative' }}">{{ equity_growth[1] }}%</td>
-                <td class="{{ 'positive' if equity_growth[2] > 10 else 'yellow' if 5 <= equity_growth[2] <= 10 else 'negative' }}">{{ equity_growth[2] }}%</td>
+                <td class="{{ 'positive' if equity_growth[0] > 10 else 'black' if 5 <= equity_growth[0] <= 10 else 'negative' }}">{{ equity_growth[0] }}%</td>
+                <td class="{{ 'positive' if equity_growth[1] > 10 else 'black' if 5 <= equity_growth[1] <= 10 else 'negative' }}">{{ equity_growth[1] }}%</td>
+                <td class="{{ 'positive' if equity_growth[2] > 10 else 'black' if 5 <= equity_growth[2] <= 10 else 'negative' }}">{{ equity_growth[2] }}%</td>
             </tr>
         </tbody>
     </table>
@@ -120,13 +120,31 @@
         <tbody>
             <tr>
                 <td class="metric">Free Cash Flow Growth</td>
-                <td class="{{ 'positive' if fcf_growth[0] > 10 else 'yellow' if 5 <= fcf_growth[0] <= 10 else 'negative' }}">{{ fcf_growth[0] }}%</td>
-                <td class="{{ 'positive' if fcf_growth[1] > 10 else 'yellow' if 5 <= fcf_growth[1] <= 10 else 'negative' }}">{{ fcf_growth[1] }}%</td>
-                <td class="{{ 'positive' if fcf_growth[2] > 10 else 'yellow' if 5 <= fcf_growth[2] <= 10 else 'negative' }}">{{ fcf_growth[2] }}%</td>
+                <td class="{{ 'positive' if fcf_growth[0] > 10 else 'black' if 5 <= fcf_growth[0] <= 10 else 'negative' }}">{{ fcf_growth[0] }}%</td>
+                <td class="{{ 'positive' if fcf_growth[1] > 10 else 'black' if 5 <= fcf_growth[1] <= 10 else 'negative' }}">{{ fcf_growth[1] }}%</td>
+                <td class="{{ 'positive' if fcf_growth[2] > 10 else 'black' if 5 <= fcf_growth[2] <= 10 else 'negative' }}">{{ fcf_growth[2] }}%</td>
             </tr>
         </tbody>
     </table>
-
+<!-- ROIC Table -->
+    <table>
+        <thead>
+            <tr>
+                <th>Return on Invested Capital</th>
+                <th>YTD</th>
+                <th>2Yrs</th>
+                <th>3Yrs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="metric">Return on Invested Capital</td>
+                <td class="{{ 'positive' if roic[0] > 10 else 'black' if 5 <= roic[0] <= 10 else 'negative' }}">{{ roic[0] }}%</td>
+                <td class="{{ 'positive' if roic[1] > 10 else 'black' if 5 <= roic[1] <= 10 else 'negative' }}">{{ roic[1] }}%</td>
+                <td class="{{ 'positive' if roic[2] > 10 else 'black' if 5 <= roic[2] <= 10 else 'negative' }}">{{ roic[2] }}%</td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 
     <script>
