@@ -1,0 +1,7 @@
+Flask==3.1.0
+GoogleNews==1.6.15
+GoogleNews==1.6.15
+pandas==2.2.3
+python_dateutil==2.8.2
+yahoo_fin==0.8.9.1
+yfinance==0.2.43

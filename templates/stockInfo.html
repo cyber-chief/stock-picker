@@ -13,6 +13,11 @@
     <input type="submit" value=Submit>
 </form>
 
+<form method="POST" action="/add">
+        <input type="hidden" name="ticker" value="{{ticker}}">
+        <button type="submit">Add</button>
+    </form>
+
 <h3>Stock Data for {{ticker}}</h3>
 
    <div class="dashboard">
@@ -170,5 +175,6 @@
     <tr></tr>
 </table>
 
-
+<a href="/goodStocks">See what stocks we have done analysis on already</a>
+    <a href="/stickerPrice">Calculate what price you should buy at</a>
 </html>

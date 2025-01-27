@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <h1>Stocks that have good financials</h1>
+<ul>
+        {% for ticker in tickers %}
+            <li>
+                {{ ticker.symbol }} - Added on {{ ticker.date_added.strftime('%Y-%m-%d %H:%M:%S') }}
+                <form method="POST" action="/stockInfo" style="display:inline;">
+                    <input type="hidden" name="stock" id="stock" value="{{ticker.symbol}}">
+                    <button type="submit">View Stock</button>
+                </form>
+                <a href="/delete/{{ ticker.id }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
 <form action="/stockInfo" method="post">
     <label for="ticker">Enter Stock Ticker</label>
     <br>
@@ -15,7 +27,5 @@
 </form>
 
 <a href="/goodStocks">See what stocks we have done analysis on already</a>
-
-
-
+    <a href="/stickerPrice">Calculate what price you should buy at</a>
 </html>

@@ -5,9 +5,31 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from flask import Flask, render_template, request
 from GoogleNews import GoogleNews
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
+
+# Configure the SQLite database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tickers.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Define the database model
+class Ticker(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    symbol = db.Column(db.String(10), unique=True, nullable=False)
+    date_added = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<Ticker {self.symbol}>"
+
+    @staticmethod
+    def get_all_tickers():
+        return Ticker.query.all()
 
 
 def getEPSResults(stock):
@@ -149,9 +171,10 @@ def findGoodStocks(tickers):
                             print(ticker +" has good financials")
     print(goodTickers)
     
+# Create database tables before the first request
+with app.app_context():
+    db.create_all()
 
-stocks = findTickers()
-findGoodStocks(stocks)
 
 #landing page
 @app.route('/', methods=['GET'])
@@ -182,7 +205,8 @@ def getStock():
 #return already evaluated stocks on Rule 1 metrics
 @app.route('/goodStocks', methods=['GET'])
 def goodStocks():
-    return render_template('goodStocks.html')
+    tickers = Ticker.get_all_tickers()
+    return render_template('goodStocks.html', tickers=tickers)
 
 @app.route('/stickerPrice', methods=['GET','POST'])
 def stickerPage():
@@ -201,6 +225,30 @@ def stickerPage():
             sticker_price = "Invalid Input"
 
     return render_template('stickerPrice.html', sticker_price=stickerPrice)
+
+
+# Route to add a new ticker
+@app.route('/add', methods=['POST'])
+def add_ticker():
+    tickers = Ticker.get_all_tickers()
+    symbol = request.form.get('ticker').upper()
+    if symbol:
+        existing_ticker = Ticker.query.filter_by(symbol=symbol).first()
+        if not existing_ticker:
+            new_ticker = Ticker(symbol=symbol)
+            db.session.add(new_ticker)
+            db.session.commit()
+    return render_template('goodStocks.html', tickers=tickers )
+
+# Route to delete a ticker
+@app.route('/delete/<int:ticker_id>')
+def delete_ticker(ticker_id):
+    ticker = Ticker.query.get(ticker_id)
+    if ticker:
+        db.session.delete(ticker)
+        db.session.commit()
+    tickers = Ticker.get_all_tickers()
+    return render_template('goodStocks.html', tickers=tickers)
 
 
 if __name__ == '__main__':
